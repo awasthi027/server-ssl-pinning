@@ -72,6 +72,26 @@ Example response:
 }
 ```
 
+### 1b) Get server pins (certificate + public key)
+
+```bash
+curl -k https://localhost:8443/api/pinning/server-pins
+```
+
+Example response:
+
+```json
+{
+  "certificatePin": "sha256/<certificate-pin>",
+  "certificateSha256Hex": "<hex-value>",
+  "publicKeyPin": "sha256/<public-key-pin>",
+  "publicKeySha256Hex": "<hex-value>",
+  "algorithm": "SHA-256",
+  "format": "sha256/<base64>",
+  "note": "Use publicKeyPin for mobile SSL pinning in most clients"
+}
+```
+
 ### 2) Validate provided pin
 
 ```bash

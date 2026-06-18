@@ -28,6 +28,15 @@ class PinningControllerTest {
     }
 
     @Test
+    void shouldReturnServerPins() throws Exception {
+        mockMvc.perform(get("/api/pinning/server-pins"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.certificatePin").exists())
+                .andExpect(jsonPath("$.publicKeyPin").exists())
+                .andExpect(jsonPath("$.algorithm").value("SHA-256"));
+    }
+
+    @Test
     void shouldFailWhenPinDoesNotMatch() throws Exception {
         mockMvc.perform(post("/api/pinning/validate")
                         .contentType(MediaType.APPLICATION_JSON)

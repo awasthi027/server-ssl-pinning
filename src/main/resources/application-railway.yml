@@ -1,9 +1,0 @@
-server:
-  port: ${PORT:8080}
-  ssl:
-    enabled: false
-
-app:
-  pinning:
-    cert-path: classpath:certs/server-cert.pem
-

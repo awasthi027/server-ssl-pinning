@@ -19,16 +19,21 @@ public class ServerPinningService {
 
     private String expectedSha256Pin;
     private String certificateSha256Hex;
+    private String expectedPublicKeySha256Pin;
+    private String publicKeySha256Hex;
 
     @PostConstruct
     public void init() throws Exception {
         try (InputStream inputStream = certResource.getInputStream()) {
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
             X509Certificate cert = (X509Certificate) certificateFactory.generateCertificate(inputStream);
-            byte[] digest = MessageDigest.getInstance("SHA-256").digest(cert.getEncoded());
+            byte[] certDigest = MessageDigest.getInstance("SHA-256").digest(cert.getEncoded());
+            byte[] publicKeyDigest = MessageDigest.getInstance("SHA-256").digest(cert.getPublicKey().getEncoded());
 
-            expectedSha256Pin = "sha256/" + Base64.getEncoder().encodeToString(digest);
-            certificateSha256Hex = toHex(digest);
+            expectedSha256Pin = "sha256/" + Base64.getEncoder().encodeToString(certDigest);
+            certificateSha256Hex = toHex(certDigest);
+            expectedPublicKeySha256Pin = "sha256/" + Base64.getEncoder().encodeToString(publicKeyDigest);
+            publicKeySha256Hex = toHex(publicKeyDigest);
         }
     }
 
@@ -38,6 +43,14 @@ public class ServerPinningService {
 
     public String getCertificateSha256Hex() {
         return certificateSha256Hex;
+    }
+
+    public String getExpectedPublicKeySha256Pin() {
+        return expectedPublicKeySha256Pin;
+    }
+
+    public String getPublicKeySha256Hex() {
+        return publicKeySha256Hex;
     }
 
     public boolean isPinValid(String providedPin) {

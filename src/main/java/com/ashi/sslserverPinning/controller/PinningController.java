@@ -31,6 +31,19 @@ public class PinningController {
         ));
     }
 
+    @GetMapping("/server-pins")
+    public ResponseEntity<Map<String, String>> getServerPins() {
+        return ResponseEntity.ok(Map.of(
+                "certificatePin", serverPinningService.getExpectedSha256Pin(),
+                "certificateSha256Hex", serverPinningService.getCertificateSha256Hex(),
+                "publicKeyPin", serverPinningService.getExpectedPublicKeySha256Pin(),
+                "publicKeySha256Hex", serverPinningService.getPublicKeySha256Hex(),
+                "algorithm", "SHA-256",
+                "format", "sha256/<base64>",
+                "note", "Use publicKeyPin for mobile SSL pinning in most clients"
+        ));
+    }
+
     @PostMapping("/validate")
     public ResponseEntity<PinValidationResponse> validatePin(@RequestBody PinValidationRequest request) {
         boolean matched = serverPinningService.isPinValid(request.pin());
