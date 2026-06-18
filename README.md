@@ -38,6 +38,22 @@ openssl pkcs12 -export \
 mvn spring-boot:run
 ```
 
+## Deploy on Railway
+
+- Railway terminates TLS at the edge and forwards HTTP to your app.
+- Use profile `railway` so the app runs without embedded HTTPS.
+
+Set this Railway variable:
+
+```bash
+SPRING_PROFILES_ACTIVE=railway
+```
+
+Important for pinning:
+
+- For clients calling the Railway URL, pin the certificate/key served by Railway.
+- Do not pin `server-keystore.p12` values for Railway URLs, because that cert is local app TLS only.
+
 ## API
 
 ### 1) Get server pin
