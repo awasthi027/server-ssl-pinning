@@ -34,20 +34,25 @@ openssl pkcs12 -export \
 
 ## Run
 
+By default the app runs over plain HTTP on port `8080` (Railway-friendly).
+
 ```bash
 mvn spring-boot:run
+```
+
+### Run locally with HTTPS (for pinning tests)
+
+Use the `local` profile to enable embedded HTTPS on `8443`:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 ## Deploy on Railway
 
 - Railway terminates TLS at the edge and forwards HTTP to your app.
-- Use profile `railway` so the app runs without embedded HTTPS.
-
-Set this Railway variable:
-
-```bash
-SPRING_PROFILES_ACTIVE=railway
-```
+- The default profile already runs plain HTTP, so no extra config is required.
+- Do NOT set `SERVER_SSL_ENABLED=true` on Railway.
 
 Important for pinning:
 
