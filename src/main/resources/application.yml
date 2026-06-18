@@ -1,7 +1,7 @@
 server:
   port: ${PORT:8443}
   ssl:
-    enabled: true
+    enabled: ${SERVER_SSL_ENABLED:true}
     key-store: classpath:certs/server-keystore.p12
     key-store-password: changeit
     key-store-type: PKCS12
