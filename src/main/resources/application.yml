@@ -1,0 +1,13 @@
+server:
+  port: 8443
+  ssl:
+    enabled: true
+    key-store: classpath:certs/server-keystore.p12
+    key-store-password: changeit
+    key-store-type: PKCS12
+    key-alias: sslserver
+
+app:
+  pinning:
+    cert-path: classpath:certs/server-cert.pem
+
